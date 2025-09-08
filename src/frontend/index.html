@@ -243,8 +243,38 @@
                         // Auto-populate chat with context
                         setChatInput(`What was happening in ${region} throughout history? What were the major civilizations, discoveries, and turning points?`);
                         
-                        // Load discoveries for that region
-                        loadDiscoveriesForRegion(region);
+                        // Trigger discovery for the clicked region
+                        setIsLoading(true);
+                        const currentYear = selectedYear || 0;
+                        const yearRange = currentYear < 0 ? 
+                            { start: currentYear - 100, end: currentYear + 100 } :
+                            { start: currentYear - 50, end: currentYear + 50 };
+                        
+                        // Make discovery request for the region
+                        fetch(`${API_URL}/api/discover`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                startYear: yearRange.start,
+                                endYear: yearRange.end,
+                                region: region,
+                                ...parameters,
+                                limit: 100
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.discoveries) {
+                                setDiscoveries(data.discoveries);
+                                updateGlobeWithDiscoveries(data.discoveries);
+                                console.log(`Found ${data.discoveries.length} discoveries in ${region}`);
+                            }
+                            setIsLoading(false);
+                        })
+                        .catch(error => {
+                            console.error('Discovery error:', error);
+                            setIsLoading(false);
+                        });
                     })
                     (globeRef.current);
 
