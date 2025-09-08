@@ -27,9 +27,10 @@ body {
     display: flex;
     align-items: center;
     padding: 0 10px;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
     overflow-y: hidden;
+    white-space: nowrap;
     scrollbar-width: thin;
     scrollbar-color: rgba(100, 100, 255, 0.3) transparent;
     z-index: 1000;
@@ -39,11 +40,12 @@ body {
     background: rgba(30, 30, 50, 0.8);
     border: 1px solid rgba(100, 100, 255, 0.3);
     border-radius: 12px;
-    padding: 8px 10px;
-    display: flex;
+    padding: 6px 8px;
+    display: inline-flex;
     flex-direction: column;
-    gap: 3px;
-    min-width: 90px;
+    gap: 2px;
+    min-width: 80px;
+    max-width: 110px;
     flex-shrink: 0;
     min-width: 120px;
     position: relative;
@@ -117,15 +119,16 @@ body {
 
 /* Main Container */
 .main-container {
-    position: fixed;
+    position: absolute;
     top: 80px;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 40px;
+    padding: 20px;
+    padding-top: 60px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     overflow-y: auto;
 }
 
