@@ -120,12 +120,11 @@ body {
 /* Main Container */
 .main-container {
     position: absolute;
-    top: 80px;
+    top: 140px;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 20px;
-    padding-top: 10px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
