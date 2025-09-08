@@ -71,12 +71,28 @@
                     const data = await response.json();
                     
                     // Add assistant response
-                    setChatMessages(prev => [...prev, {
-                        role: 'assistant',
-                        content: data.content,
-                        metadata: data.metadata,
-                        timestamp: Date.now()
-                    }]);
+                    if (data && data.content) {
+                        setChatMessages(prev => [...prev, {
+                            role: 'assistant',
+                            content: data.content,
+                            metadata: data.metadata,
+                            timestamp: Date.now()
+                        }]);
+                    } else if (data && data.response) {
+                        setChatMessages(prev => [...prev, {
+                            role: 'assistant',
+                            content: data.response,
+                            metadata: data.metadata,
+                            timestamp: Date.now()
+                        }]);
+                    } else {
+                        console.error('Invalid chat response:', data);
+                        setChatMessages(prev => [...prev, {
+                            role: 'assistant',
+                            content: 'Sorry, I encountered an error processing your request.',
+                            timestamp: Date.now()
+                        }]);
+                    }
                     
                     // Auto-scroll to bottom
                     setTimeout(() => {
@@ -410,7 +426,7 @@
                     { region: 'Maya', title: 'Classic period peaks', year },
                     { region: 'Rome', title: 'Empire expands eastward', year },
                     { region: 'India', title: 'Gupta golden age', year }
-                ].filter(e => Math.random() > 0.3); // Random selection for demo
+                ].filter(e => e.year === year); // Filter for matching year
                 
                 setGlobalContext(mockContext);
             };

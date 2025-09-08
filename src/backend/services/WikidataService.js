@@ -148,7 +148,7 @@ LIMIT ${limit}`;
                 country: binding.countryLabel?.value || '',
                 description: binding.description?.value || '',
                 image: binding.image?.value || null,
-                confidence: 0.7 + Math.random() * 0.3, // Will be replaced with AI confidence
+                confidence: 0.75 + (binding.references ? Math.min(binding.references.length / 20, 0.25) : 0), // Confidence based on number of references
                 source: 'wikidata'
             };
         }).filter(event => event.title !== 'Unknown Event');

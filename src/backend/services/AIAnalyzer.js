@@ -450,7 +450,7 @@ Return JSON with this structure:
                 if (keywords.some(keyword => text.includes(keyword))) {
                     indicators.push({
                         type,
-                        severity: 0.5 + Math.random() * 0.3,
+                        severity: 0.5 + (indicators.length / 10) * 0.3, // Severity based on number of indicators
                         events: [event.title],
                         description: `${type.replace('_', ' ')} indicator detected`
                     });
@@ -474,7 +474,10 @@ Return JSON with this structure:
         
         events.forEach(event => {
             // Simple anomaly detection based on unusual combinations
-            const anomalyScore = Math.random() * 0.5 + 0.3;
+            // Calculate anomaly score based on event characteristics
+            const yearDeviation = Math.abs(event.year % 100) / 100;
+            const hasMultipleLocations = event.coordinates && event.coordinates.length > 1 ? 0.2 : 0;
+            const anomalyScore = 0.3 + yearDeviation * 0.3 + hasMultipleLocations;
             
             if (anomalyScore > 0.5) {
                 anomalies.push({

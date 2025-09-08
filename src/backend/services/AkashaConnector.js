@@ -82,7 +82,7 @@ class AkashaConnector {
     }
 
     async preserveLocally(data) {
-        const id = `akasha_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const id = `akasha_${Date.now()}_${this.preservationQueue ? this.preservationQueue.length + 1 : 1}`;
         const filePath = path.join(this.localStoragePath, `${id}.json`);
         
         try {
@@ -145,9 +145,9 @@ class AkashaConnector {
                 spatial: this.extractSpatialDimension(event),
                 causal: this.extractCausalDimension(event),
                 semantic: this.extractSemanticDimension(event),
-                entropic: Math.random(), // Entropy dimension
-                harmonic: Math.random(), // Harmonic resonance
-                quantum: Math.random()   // Quantum coherence
+                entropic: 0.5 + (event.confidence || 0.5) * 0.5, // Entropy dimension based on confidence
+                harmonic: 0.3 + (event.temporalResonance || 0.7), // Harmonic resonance based on temporal patterns
+                quantum: 0.4 + (event.patternStrength || 0.6)   // Quantum coherence based on pattern strength
             },
             enriched: true,
             enrichmentTimestamp: Date.now()

@@ -1,0 +1,5 @@
+{
+  "frontend": 3000,
+  "backend": 8000,
+  "websocket": 8001
+}

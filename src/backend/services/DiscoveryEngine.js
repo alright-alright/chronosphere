@@ -434,7 +434,7 @@ class DiscoveryEngine {
             for (const [type, items] of Object.entries(discoveries)) {
                 for (const item of items) {
                     await this.atlas.components.mpu.store(
-                        `discovery_${type}_${timestamp}_${Math.random().toString(36).substr(2, 9)}`,
+                        `discovery_${type}_${timestamp}_${this.discoveries.size}_${items.indexOf(item)}`,
                         item
                     );
                 }
@@ -475,7 +475,7 @@ class DiscoveryEngine {
             items.forEach(item => {
                 formatted.push({
                     ...item,
-                    id: `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                    id: `${type}_${Date.now()}_${formatted.length + 1}`,
                     timestamp: Date.now()
                 });
             });
