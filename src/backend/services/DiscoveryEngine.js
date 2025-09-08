@@ -171,7 +171,7 @@ class DiscoveryEngine {
         }
         
         // Use Atlas HASR to find material culture patterns
-        if (this.atlas.components.hasr) {
+        if (this.atlas.components.hasr && this.atlas.components.hasr.findPatterns) {
             const patterns = await this.atlas.components.hasr.findPatterns(
                 events.map(e => e.processing?.symbolic).filter(Boolean)
             );

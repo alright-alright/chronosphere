@@ -599,8 +599,8 @@
                         <div className="monitor-card ai-monitor">
                             <div className="monitor-label">AI PROVIDER</div>
                             <div className="monitor-value">
-                                <span className={`monitor-indicator ${systemStatus.activeProvider !== 'fallback' ? 'indicator-active' : 'indicator-warning'}`}></span>
-                                {systemStatus.activeProvider?.toUpperCase() || 'FALLBACK'}
+                                <span className={`monitor-indicator ${systemStatus.activeProvider && systemStatus.activeProvider !== 'fallback' ? 'indicator-active' : 'indicator-error'}`}></span>
+                                {systemStatus.activeProvider?.toUpperCase() || 'DISCONNECTED'}
                             </div>
                         </div>
 

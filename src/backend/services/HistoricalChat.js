@@ -180,7 +180,7 @@ class HistoricalChat {
         };
 
         // Get relevant patterns from MPU
-        if (this.atlas.components.mpu) {
+        if (this.atlas.components.mpu && this.atlas.components.mpu.query) {
             const patterns = await this.atlas.components.mpu.query(
                 intent.keywords ? intent.keywords.join(' ') : ''
             );
