@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Read(//Users/aerynwhite/Documents/GitHub/atlas-framework/packages/**)",
+      "Read(//Users/aerynwhite/Documents/GitHub/**)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(./start.sh:*)",
+      "Bash(open:*)",
+      "Bash(osascript:*)",
+      "Bash(git reset:*)",
+      "Bash(gh repo create:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
