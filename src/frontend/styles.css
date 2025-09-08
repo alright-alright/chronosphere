@@ -119,12 +119,13 @@ body {
 
 /* Main Container */
 .main-container {
-    position: absolute;
-    top: 200px;
+    position: fixed;
+    top: 85px;
     left: 0;
     right: 0;
     bottom: 0;
     padding: 20px;
+    padding-top: 5px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -146,6 +147,7 @@ body {
     border: 1px solid rgba(100, 100, 255, 0.2);
     border-radius: 16px;
     padding: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
     width: 90%;
