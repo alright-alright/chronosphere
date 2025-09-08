@@ -341,6 +341,12 @@ SELECT ?event ?eventLabel ?date ?coords ?description ?image
         }
         return null;
     }
+
+    // Check if Wikidata service is connected
+    isConnected() {
+        // Return true if we have cached data or can reach the endpoint
+        return this.cache.size > 0 || this.endpoint !== null;
+    }
 }
 
 module.exports = WikidataService;

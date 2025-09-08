@@ -490,9 +490,6 @@ class AtlasIntegration {
             mpu: this.components.mpu ? 'active' : 'inactive',
             hasr: this.components.hasr ? 'active' : 'inactive',
             ghostLoops: this.components.ghostLoops ? 'active' : 'inactive',
-            soulLayer: this.components.soulLayer?.active ? 'active' : 'inactive',
-            dreamState: this.components.dreamState?.active ? 'active' : 'inactive',
-            reflective: this.components.reflective?.active ? 'active' : 'inactive',
             totalActive: Object.values(this.components).filter(c => c && (c.active || c.process || c.store)).length
         };
     }

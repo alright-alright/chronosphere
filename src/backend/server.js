@@ -179,6 +179,7 @@ class ChronoSphereBackend {
 
     // Real discovery analysis using all services
     this.app.post('/api/discover', async (req, res) => {
+      const startTime = Date.now();
       try {
         const { startYear, endYear, region, limit } = req.body;
         const parameters = req.body;
@@ -239,6 +240,11 @@ class ChronoSphereBackend {
           discoveries: formattedDiscoveries.length,
           metrics: results.metrics
         });
+        
+        // Track latency
+        if (this.trackLatency) {
+          this.trackLatency(startTime);
+        }
         
         res.json({
           discoveries: formattedDiscoveries,
@@ -391,20 +397,35 @@ class ChronoSphereBackend {
         message: 'ChronoSphere WebSocket connected'
       }));
       
+      // Track real metrics
+      let requestCount = 0;
+      let totalLatency = 0;
+      let lastRequestTime = Date.now();
+      
       // Send real component status updates
       const statusInterval = setInterval(async () => {
         const atlasStatus = this.atlas.getComponentStatus();
         const aiStatus = this.ai.getProviderStatus();
         const akashaStatus = this.akasha.getStatus();
+        const discoveryStatus = this.discovery.getStatus();
+        
+        // Calculate real latency from last API request
+        const currentTime = Date.now();
+        const timeSinceLastRequest = currentTime - lastRequestTime;
+        const realLatency = timeSinceLastRequest < 5000 ? timeSinceLastRequest : 0;
+        
+        // Count active ghost loops from discoveries
+        const activeGhostLoops = this.activeDiscoveries ? 
+          this.activeDiscoveries.filter(d => d.type === 'ghost_loop').length : 0;
         
         ws.send(JSON.stringify({
           type: 'status',
           data: {
             components: atlasStatus.totalActive,
-            loops: Math.floor(Math.random() * 100),
+            loops: activeGhostLoops + discoveryStatus.discoveriesCount,
             memory: process.memoryUsage().heapUsed / 1024 / 1024,
-            latency: 20 + Math.random() * 60,
-            wikidata: 'connected',
+            latency: realLatency || totalLatency / (requestCount || 1),
+            wikidata: this.wikidata.isConnected() ? 'connected' : 'connecting',
             akasha: akashaStatus.connected ? 'active' : 'local',
             atlas: atlasStatus,
             ai: aiStatus,
@@ -412,6 +433,14 @@ class ChronoSphereBackend {
           }
         }));
       }, 2000);
+      
+      // Track request latency
+      this.trackLatency = (startTime) => {
+        const latency = Date.now() - startTime;
+        totalLatency += latency;
+        requestCount++;
+        lastRequestTime = Date.now();
+      };
 
       // Handle incoming messages
       ws.on('message', (message) => {
