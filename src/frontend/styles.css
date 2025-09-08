@@ -33,7 +33,7 @@ body {
     white-space: nowrap;
     scrollbar-width: thin;
     scrollbar-color: rgba(100, 100, 255, 0.3) transparent;
-    z-index: 1000;
+    z-index: 9999;
 }
 
 .monitor-card {
@@ -125,11 +125,12 @@ body {
     right: 0;
     bottom: 0;
     padding: 20px;
-    padding-top: 100px;
+    padding-top: 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     overflow-y: auto;
+    z-index: 1;
 }
 
 .content-wrapper {
